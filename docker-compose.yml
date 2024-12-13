@@ -38,6 +38,9 @@ services:
       - ./react-quiz:/app
     stdin_open: true
     tty: true
+    networks:
+      - vkbot-net
+
 
   cors:
     build: ./nginx
@@ -47,6 +50,8 @@ services:
     depends_on:
       - vk_bot_backend
       - vk_bot_frontend
+    networks:
+      - vkbot-net
 
 networks:
   vkbot-net:
