@@ -15,7 +15,7 @@ services:
       - vkbot-net
 
   vk_bot_backend:
-    build: ./api/100-1
+    build: ./100-1
     container_name: vk_bot_backend
     command: bash -c "alembic upgrade head && python main.py"
     ports:
@@ -23,19 +23,19 @@ services:
     depends_on:
       - vk_bot_db
     volumes:
-      - ./api/100-1:/app
+      - ./100-1:/app
     networks:
       - vkbot-net
 
   vk_bot_frontend:
-    build: ./client/react-quiz
-    container_name: vk_bot_client
+    build: ./react-quiz
+    container_name: vk_bot_frontend
     ports: 
      - "3000:3000"
     depends_on:
       - vk_bot_backend
     volumes:
-      - ./client/react-quiz:/app
+      - ./react-quiz:/app
     stdin_open: true
     tty: true
 

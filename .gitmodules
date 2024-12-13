@@ -1,0 +1,6 @@
+[submodule "react-quiz"]
+	path = react-quiz
+	url = git@github.com:pavelnov67/react-quiz.git
+[submodule "100-1"]
+	path = 100-1
+	url = git@github.com:Safonovdv91/100-1.git
