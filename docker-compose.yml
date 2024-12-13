@@ -1,0 +1,53 @@
+services:
+  vk_bot_db:
+    container_name: "vk_bot_db"
+    image: postgres:15.4-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: vk_user
+      POSTGRES_PASSWORD: vk_pass
+      POSTGRES_DB: vk_game
+    ports:
+      - "9001:5432"
+    volumes:
+      - /vk_bot/pg_data:/var/lib/postgresql/data
+    networks:
+      - vkbot-net
+
+  vk_bot_backend:
+    build: ./api/100-1
+    container_name: vk_bot_backend
+    command: bash -c "alembic upgrade head && python main.py"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - vk_bot_db
+    volumes:
+      - ./api/100-1:/app
+    networks:
+      - vkbot-net
+
+  vk_bot_frontend:
+    build: ./client/react-quiz
+    container_name: vk_bot_client
+    ports: 
+     - "3000:3000"
+    depends_on:
+      - vk_bot_backend
+    volumes:
+      - ./client/react-quiz:/app
+    stdin_open: true
+    tty: true
+
+  cors:
+    build: ./nginx
+    container_name: vk_bot_nginx
+    ports: 
+      - "4545:80"
+    depends_on:
+      - vk_bot_backend
+      - vk_bot_frontend
+
+networks:
+  vkbot-net:
+    driver: bridge

@@ -5,3 +5,8 @@ Backend:
 - aiohttp
 Frontend:
 - react
+
+Перед запуском Frontend 
+```sh
+npm install
+```
