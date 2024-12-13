@@ -1,6 +1,0 @@
-[submodule "100-1"]
-	path = api/100-1
-	url = git@github.com:Safonovdv91/100-1.git
-[submodule "react-quiz"]
-	path = client/react-quiz
-	url = git@github.com:pavelnov67/react-quiz.git
