@@ -18,18 +18,17 @@ services:
     build: ./100-1
     container_name: vk_bot_backend
     restart: unless-stopped
-    links:
-      - vk_bot_db:mydb
     environment:
-      STATUS: "DEV" # delete it in production
+#      STATUS: "DEV" # delete it in production
+      PORT: "8000"
       POSTGRES_USER: vk_user
       POSTGRES_PASSWORD: vk_pass
       POSTGRES_DB: vk_game
-      DB_HOST: localhost
+      DB_HOST: vk_bot_db
       DB_PORT: "5432"
-    #command: bash -c "alembic upgrade head && python main.py"
-    #ports:
-    # - "8000:8000"
+    command: bash -c "alembic upgrade head && python main.py"
+    ports:
+     - "8000:8000"
     depends_on:
       - vk_bot_db
     volumes:
@@ -42,9 +41,7 @@ services:
     container_name: vk_bot_frontend
     restart: unless-stopped
     ports: 
-      - "3000:3001"
-    environments:
-      STATUS: "DEV" # delete it in production
+      - "3000:3000"
     depends_on:
       - vk_bot_backend
       #volumes:
